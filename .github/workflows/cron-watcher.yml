@@ -2,9 +2,9 @@ name: alohaq-watcher
 
 on:
   schedule:
-    # Every 15 minutes. GitHub cron is UTC; runs are best-effort and may be
-    # delayed a few minutes under load. 15 min is a good balance.
-    - cron: "*/15 * * * *"
+    # Every 15 minutes, offset from :00/:15/:30/:45 to dodge the top-of-hour
+    # congestion GitHub warns scheduled workflows about. GitHub cron is UTC.
+    - cron: "1,16,31,46 * * * *"
   workflow_dispatch: {}   # lets you run it manually from the Actions tab
 
 # Allow the job to commit the updated seen.json back to the repo.

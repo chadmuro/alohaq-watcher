@@ -1,12 +1,11 @@
 # AlohaQ Renewal Watcher
 
-Checks Honolulu AlohaQ for **driver-license renewal** openings at 5 locations on
-your target dates, and **emails your Gmail** when a slot opens. Runs free, 24/7
-on GitHub Actions every 15 minutes.
+Checks Honolulu AlohaQ for **driver-license renewal** openings at your chosen
+locations and dates, and **emails your Gmail** when a slot opens. Runs free,
+24/7 on GitHub Actions on a short interval.
 
-Locations watched: Kapalama Driver License, Downtown / Hawaii Kai / Pearlridge /
-Windward City Satellite City Halls.
-Dates watched: 6/24, 6/25, 6/26, 7/1, 7/2, 7/3, 7/6.
+Locations and dates are configured in `check.py` (`LOCATION_CODES` and
+`TARGET_DATES`) — edit those to match what you're watching for.
 
 ---
 
@@ -58,21 +57,13 @@ first run manually: repo → **Actions → alohaq-watcher → Run workflow**.
 ---
 
 ## Notes & tuning
-- **Frequency:** edit the `cron` in `.github/workflows/watcher.yml`. `*/15` =
-  every 15 min. Don't go below ~10 min — be polite to a government site and
-  avoid looking like an attack.
+- **Frequency:** edit the `cron` in `.github/workflows/cron-watcher.yml`. Keep
+  the interval reasonable — frequent enough to catch openings, infrequent
+  enough to be polite to the site.
 - **No double-spam:** `seen.json` records each `(location, date)` already
   alerted. You get re-alerted only if a slot disappears and later reappears.
-- **Watch hour:** slots are released daily ~4:15 p.m. Hawaii time (cancellations
-  appear all day). 4:15 p.m. HST = 02:15 UTC next day — the */15 schedule covers it.
 - **Booking is still manual.** This only *notifies*; it does not auto-book
   (booking needs your identity + SMS verification). When you get the email, open
   the link and grab it fast — these go quickly.
 - **Debugging in CI:** the Actions run log shows each location's result. If a run
   errors, check that log first.
-
-## Legal/etiquette
-You're polling a public government booking page at a modest rate to watch for
-your own appointment. Keep the interval reasonable (≥10 min), don't parallelize
-aggressively, and don't auto-book. That keeps this firmly in "personal
-availability alert" territory.
