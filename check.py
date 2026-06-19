@@ -59,6 +59,7 @@ TARGET_DATES = [
     (6, 24), (6, 25), (6, 26),
     (7, 1), (7, 2), (7, 3),
     (7, 6),
+    (10, 1),  # TEMP: testing only, likely-open date to verify the email flow
 ]
 
 # File that remembers what we've already alerted on (committed back by CI).
